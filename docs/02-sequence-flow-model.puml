@@ -1,0 +1,64 @@
+@startuml Sequence Model - Operation Flow
+@enduml
+
+end note
+    Verifiable and immutable alert recorded
+    **Transaction completed successfully**
+note over VehicleA, Ledger
+
+Ledger --> VehicleB : Transaction confirmation
+VehicleB -> Ledger : Queries provenance\nand integrity of alert
+== Verification by Receiver ==
+
+Validators -> Ledger : Updates local ledger
+
+Leader -> Validators : Transmits block to network
+Leader -> Ledger : Records validated block
+Leader -> Leader : Assembles new block
+== Block Creation and Propagation ==
+
+Validators -> Leader : Consensus reached
+
+end note
+    4. Commit
+    3. Prepare
+    2. Pre-prepare
+    1. Request
+    PBFT Stages:
+note right
+Validators -> Validators : Executes Consensus\nAlgorithm (PBFT)
+== Consensus ==
+
+RSU -> Validators : Propagates\nAggregated Transaction
+
+end note
+    and integrity
+    Validates authenticity
+note right
+RSU -> RSU : Verifies digital\nsignature
+
+Identity --> RSU : Returns Public Key
+RSU -> Identity : Query Public Key\nof Vehicle A
+== Validation and Aggregation ==
+
+VehicleA -> RSU : Transmits signed\nmessage (V2I)
+VehicleA -> VehicleB : Transmits signed\nmessage (V2V)
+
+VehicleA -> VehicleA : Signs with Private Key
+VehicleA -> VehicleA : Generates Alert Message
+VehicleA -> VehicleA : Detects hazard
+== Alert Generation and Transmission ==
+
+database "Blockchain/DAG" as Ledger
+participant "Leader Node/\nMiner" as Leader
+participant "Validator Nodes" as Validators
+participant "Identity\nService" as Identity
+participant "Gateway RSU" as RSU
+actor "Vehicle B" as VehicleB
+actor "Vehicle A" as VehicleA
+
+skinparam sequenceParticipant underline
+skinparam maxmessagesize 60
+skinparam roundcorner 20
+skinparam sequenceArrowThickness 2
+!theme plain

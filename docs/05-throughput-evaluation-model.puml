@@ -1,0 +1,49 @@
+﻿@startuml Evaluation Model - Throughput
+!theme plain
+title Network Throughput - Transactions Per Second (TPS)
+package "Validator Configurations" {
+    rectangle "4 Validators" as config4 {
+        card "TPS: 850" as tps4 #lightblue
+        card "Latency: 65ms" as lat4
+    }
+    rectangle "7 Validators" as config7 {
+        card "TPS: 1200" as tps7 #lightgreen
+        card "Latency: 48ms" as lat7
+    }
+    rectangle "10 Validators" as config10 {
+        card "TPS: 1450" as tps10 #yellow
+        card "Latency: 52ms" as lat10
+    }
+    rectangle "15 Validators" as config15 {
+        card "TPS: 1650" as tps15 #orange
+        card "Latency: 78ms" as lat15
+    }
+    rectangle "20 Validators" as config20 {
+        card "TPS: 1550" as tps20 #red
+        card "Latency: 125ms" as lat20
+    }
+}
+config4 -[hidden]right-> config7
+config7 -[hidden]right-> config10
+config10 -[hidden]right-> config15
+config15 -[hidden]right-> config20
+note bottom
+    **Throughput Analysis:**
+    **Optimal Point: 10-15 Validators**
+    • Maximum TPS: ~1650 (15 validators)
+    • Best latency: 48ms (7 validators)
+    • Ideal trade-off: 10 validators
+    **Limiting Factors:**
+    1. PBFT communication overhead: O(n²)
+    2. Network bandwidth
+    3. Node processing capacity
+    **Observations:**
+    • >15 validators: degradation due to overhead
+    • <7 validators: lower fault tolerance
+    • Main bottleneck: PBFT consensus
+    **Possible Optimizations:**
+    → Regional validator sharding
+    → Transaction parallelization
+    → Optimized BFT (HotStuff, Tendermint)
+end note
+@enduml

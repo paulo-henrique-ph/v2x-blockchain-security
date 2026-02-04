@@ -1,0 +1,72 @@
+@startuml Conceptual Architecture Model
+!define RECTANGLE class
+
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam component {
+    BackgroundColor LightBlue
+    BorderColor Black
+    ArrowColor Black
+}
+
+package "Device Layer" {
+    component [Vehicles\n(V2V/V2I)] as vehicles
+    component [Infrastructure\n(Traffic Lights, Sensors)] as infra
+}
+
+package "Gateway/Edge Layer" {
+    component [RSU 1\n(Road Side Unit)] as rsu1
+    component [RSU 2\n(Road Side Unit)] as rsu2
+    component [RSU N\n(Road Side Unit)] as rsun
+    note right of rsu1
+        Aggregation and
+        Pre-validation
+        of Transactions
+    end note
+}
+
+package "Consensus/Validation Layer" {
+    component [Validator Node 1\n(Manufacturer)] as validator1
+    component [Validator Node 2\n(Traffic Authority)] as validator2
+    component [Validator Node N] as validatorn
+    note right of validator1
+        Consensus Algorithm
+        (PBFT / PoA)
+    end note
+}
+
+package "Distributed Ledger Layer" {
+    database "Blockchain/DAG\n(Immutable Blocks)" as ledger
+    note right of ledger
+        Distributed and
+        Replicated
+        Storage
+    end note
+}
+
+vehicles -down-> rsu1 : V2V/V2I Message\n+ Digital Signature
+vehicles -down-> rsu2
+infra -down-> rsu2
+infra -down-> rsun
+
+rsu1 -down-> validator1 : Aggregated\nTransactions
+rsu2 -down-> validator2
+rsun -down-> validatorn
+
+validator1 -down-> ledger : Validated\nBlocks
+validator2 -down-> ledger
+validatorn -down-> ledger
+
+validator1 <-right-> validator2 : Consensus
+validator2 <-right-> validatorn
+
+note bottom of ledger
+    **Data Flow:**
+    1. V2V/V2I Message
+    2. Digital Signature
+    3. Gateway (Pre-validation)
+    4. Consensus Validation
+    5. Ledger Registration
+end note
+
+@enduml

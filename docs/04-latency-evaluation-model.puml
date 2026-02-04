@@ -1,0 +1,55 @@
+@startuml Evaluation Model - End-to-End Latency
+!theme plain
+
+title End-to-End Latency vs Number of Vehicles
+
+' Simulation data
+!define DATA_50  45
+!define DATA_100 52
+!define DATA_200 68
+!define DATA_500 95
+!define DATA_1000 138
+!define DATA_2000 205
+
+scale 800 width
+
+' Line chart
+!procedure $plot($x, $y, $label)
+    rectangle "$label\n$y ms" as point$x <<data>>
+!endprocedure
+
+package "E2E Latency (ms)" {
+    rectangle "50 vehicles\n45ms" as p50 #lightgreen
+    rectangle "100 vehicles\n52ms" as p100 #lightgreen
+    rectangle "200 vehicles\n68ms" as p200 #yellow
+    rectangle "500 vehicles\n95ms" as p500 #orange
+    rectangle "1000 vehicles\n138ms" as p1000 #orange
+    rectangle "2000 vehicles\n205ms" as p2000 #red
+}
+
+p50 -[hidden]right-> p100
+p100 -[hidden]right-> p200
+p200 -[hidden]right-> p500
+p500 -[hidden]right-> p1000
+p1000 -[hidden]right-> p2000
+
+note bottom
+    **Latency Metrics:**
+
+    **Total Time Components:**
+    • Generation and signature: 5-8ms
+    • V2I transmission: 10-15ms
+    • Pre-validation (RSU): 8-12ms
+    • Network propagation: 15-30ms
+    • Consensus (PBFT): 20-100ms
+    • Ledger recording: 5-10ms
+
+    **Analysis:**
+    ✓ Up to 200 vehicles: Acceptable latency (<100ms)
+    ⚠ 500-1000 vehicles: Moderate latency
+    ✗ >2000 vehicles: Requires optimization
+
+    **ITS Requirement:** Maximum latency < 100ms
+end note
+
+@enduml

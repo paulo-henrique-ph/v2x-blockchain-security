@@ -1,0 +1,59 @@
+﻿@startuml Blockchain Platform Comparison
+!theme plain
+title Comparative Analysis of Platforms for ITS
+package "Hyperledger Fabric" as fabric {
+    card "**Consensus Type**\nPBFT / RAFT" as fabric_consensus #lightblue
+    card "**Transaction Rate**\nHigh (1000-3500 TPS)" as fabric_tps #lightgreen
+    card "**Network Type**\nPrivate Consortium" as fabric_network
+    card "**Privacy**\nPrivate Channels\nVery High" as fabric_privacy #lightgreen
+    card "**Operating Cost**\nLow (no fees)" as fabric_cost #lightgreen
+    card "**Scalability**\nModerate/High" as fabric_scale #yellow
+    card "**ITS Suitability**\n★★★★★\nVery Suitable" as fabric_fit #lightgreen
+}
+package "Ethereum (PoA)" as ethereum {
+    card "**Consensus Type**\nProof of Authority" as eth_consensus #lightblue
+    card "**Transaction Rate**\nModerate (100-500 TPS)" as eth_tps #yellow
+    card "**Network Type**\nPublic/Permissioned" as eth_network
+    card "**Privacy**\nLow (public)\nModerate (private)" as eth_privacy #yellow
+    card "**Operating Cost**\nModerate (gas)" as eth_cost #yellow
+    card "**Scalability**\nModerate" as eth_scale #yellow
+    card "**ITS Suitability**\n★★★☆☆\nModerate" as eth_fit #yellow
+}
+package "IOTA (Tangle/DAG)" as iota {
+    card "**Consensus Type**\nTangle (DAG)" as iota_consensus #lightblue
+    card "**Transaction Rate**\nVery High\n(1000+ TPS theoretical)" as iota_tps #lightgreen
+    card "**Network Type**\nPublic Distributed" as iota_network
+    card "**Privacy**\nLow (public)" as iota_privacy #red
+    card "**Operating Cost**\nZero (no fees)" as iota_cost #lightgreen
+    card "**Scalability**\nVery High" as iota_scale #lightgreen
+    card "**ITS Suitability**\n★★★★☆\nHigh Potential" as iota_fit #yellow
+}
+fabric -[hidden]right-> ethereum
+ethereum -[hidden]right-> iota
+note bottom
+    **Recommendation for ITS System:**
+    **1st Choice: Hyperledger Fabric**
+    ✓ Full control over participants
+    ✓ Native privacy (channels)
+    ✓ Adequate performance for ITS
+    ✓ No transaction costs
+    ✓ Enterprise maturity
+    **2nd Choice: IOTA (for specific cases)**
+    ✓ Scalability for M2M
+    ✓ Microtransactions at no cost
+    ✓ Suitable for frequent messages
+    ⚠ Lower privacy
+    ⚠ Lower maturity for consortiums
+    **3rd Choice: Ethereum PoA**
+    ⚠ Limited performance
+    ⚠ Operational costs (gas)
+    ✓ Mature ecosystem
+    ✓ Available tooling
+    **Weighted Criteria for ITS:**
+    • Performance: 30%
+    • Privacy: 25%
+    • Control/Governance: 20%
+    • Cost: 15%
+    • Maturity: 10%
+end note
+@enduml
