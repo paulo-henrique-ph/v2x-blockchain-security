@@ -1,41 +1,76 @@
-# Prerequisites
-*.d
+# General
+.DS_Store
+.env
+*.log
+*.pid
+*.seed
+*.pid.lock
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
+# Go
+*.exe
+*.exe~
+*.dll
 *.so
 *.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
+*.test
 *.out
-*.app
+vendor/
+go.sum
 
-# debug information files
-*.dwo
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Hyperledger Fabric
+hyperledger-fabric/wallet/
+hyperledger-fabric/data/
+hyperledger-fabric/crypto-config/
+hyperledger-fabric/channel-artifacts/
+hyperledger-fabric/chaincode/go/vendor/
+
+# Ethereum
+ethereum-poa/build/
+ethereum-poa/data/
+ethereum-poa/node_modules/
+ethereum-poa/.openzeppelin/
+ethereum-poa/coverage/
+ethereum-poa/coverage.json
+
+# IOTA
+iota/wallet/
+iota/.stronghold/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Build artifacts
+dist/
+build/
+*.tgz
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Temporary files
+tmp/
+temp/
+*.tmp
