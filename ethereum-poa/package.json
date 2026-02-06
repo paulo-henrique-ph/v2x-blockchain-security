@@ -1,0 +1,52 @@
+{
+  "name": "@v2v-blockchain/ethereum-poa-client",
+  "version": "1.0.0",
+  "description": "Ethereum PoA (Proof of Authority) implementation for V2X ITS security system",
+  "main": "client/index.js",
+  "scripts": {
+    "compile": "truffle compile",
+    "migrate": "truffle migrate",
+    "test": "truffle test",
+    "test:coverage": "truffle run coverage",
+    "console": "truffle console",
+    "start": "node client/index.js",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "ethereum",
+    "poa",
+    "proof-of-authority",
+    "blockchain",
+    "smart-contracts",
+    "v2x",
+    "its",
+    "v2v",
+    "v2i",
+    "vehicular-networks"
+  ],
+  "author": "Paulo Henrique Gomes Pinto",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "web3": "^4.3.0",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/sdk-node": "^0.45.1",
+    "@opentelemetry/sdk-trace-node": "^1.19.0",
+    "@opentelemetry/sdk-metrics": "^1.19.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.45.1",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.45.1",
+    "@opentelemetry/exporter-prometheus": "^0.45.1",
+    "@opentelemetry/instrumentation": "^0.45.1",
+    "@opentelemetry/instrumentation-http": "^0.45.1",
+    "@opentelemetry/instrumentation-express": "^0.34.0",
+    "@opentelemetry/resources": "^1.19.0",
+    "@opentelemetry/semantic-conventions": "^1.19.0"
+  },
+  "devDependencies": {
+    "truffle": "^5.11.5",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "solidity-coverage": "^0.8.5",
+    "eslint": "^8.57.0"
+  }
+}
