@@ -1,0 +1,30 @@
+{
+  "network": {
+    "mainnet": {
+      "nodeUrl": "https://api.mainnet.iotaledger.net",
+      "explorerUrl": "https://explorer.iota.org/mainnet"
+    },
+    "testnet": {
+      "nodeUrl": "https://api.testnet.shimmer.network",
+      "explorerUrl": "https://explorer.shimmer.network/testnet"
+    },
+    "devnet": {
+      "nodeUrl": "https://api.devnet.iotaledger.net",
+      "explorerUrl": "https://explorer.iota.org/devnet"
+    }
+  },
+  "tags": {
+    "vehicle": "ITS_VEHICLE",
+    "alert": "ITS_ALERT",
+    "telemetry": "ITS_TELEMETRY"
+  },
+  "settings": {
+    "enableLocalPow": true,
+    "timeout": 30000,
+    "retryAttempts": 3
+  },
+  "security": {
+    "requireSignature": true,
+    "encryptData": false
+  }
+}
