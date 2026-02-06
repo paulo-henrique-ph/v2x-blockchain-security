@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package v2x;
+
+option go_package = "github.com/phgp/v2x-gateway-rsu/internal/infrastructure/adapters/grpc/pb";
+
+// V2X Message Service
+service V2XService {
+  // Process a single V2X message
+  rpc ProcessMessage(V2XMessageRequest) returns (ProcessingResponse);
+
+  // Process batch of V2X messages
+  rpc ProcessBatch(BatchRequest) returns (ProcessingResponse);
+
+  // Get gateway statistics
+  rpc GetStatistics(Empty) returns (StatisticsResponse);
+
+  // Health check
+  rpc HealthCheck(Empty) returns (HealthResponse);
+
+  // Streaming: continuous message processing
+  rpc StreamMessages(stream V2XMessageRequest) returns (stream ProcessingResponse);
+}
+
+// V2X Message Request
+message V2XMessageRequest {
+  string message_id = 1;
+  string message_type = 2;
+  string sender_id = 3;
+  string timestamp = 4;
+  int32 priority = 5;
+  double latitude = 6;
+  double longitude = 7;
+  string signature = 8;
+  map<string, string> metadata = 9;
+}
+
+// Batch Request
+message BatchRequest {
+  repeated V2XMessageRequest messages = 1;
+}
+
+// Processing Response
+message ProcessingResponse {
+  bool success = 1;
+  string tx_hash = 2;
+  string status = 3;
+  string message_id = 4;
+  string timestamp = 5;
+  int64 latency = 6;
+  string reason = 7;
+  string error = 8;
+}
+
+// Statistics Response
+message StatisticsResponse {
+  int64 total_messages = 1;
+  int64 critical_messages = 2;
+  int64 messages_per_second = 3;
+  int64 aggregated_messages = 4;
+  double avg_latency = 5;
+  string uptime = 6;
+  map<string, int64> message_types = 7;
+}
+
+// Health Response
+message HealthResponse {
+  string status = 1;
+  string version = 2;
+  string timestamp = 3;
+  map<string, string> components = 4;
+}
+
+// Empty message for requests with no parameters
+message Empty {}
