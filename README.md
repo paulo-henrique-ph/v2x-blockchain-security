@@ -21,6 +21,7 @@
 - [Quick Start](#-quick-start)
 - [Project Structure](#-project-structure)
 - [Architecture](#️-architecture)
+- [Architecture Diagrams](#-architecture-diagrams)
 - [Platform Comparison](#-platform-comparison)
 - [Research Scenarios](#-research-scenarios-implemented)
 - [Security Features](#-security-features)
@@ -269,6 +270,48 @@ This project provides **three alternative blockchain platforms** for comprehensi
 - Timestamp validation
 - Coordinate validation
 - Replay attack prevention
+
+## 📊 Architecture Diagrams
+
+The following diagrams provide comprehensive visualization of the system architecture, data flows, and performance evaluation models:
+
+### 1. Conceptual Architecture Model
+
+![Conceptual Architecture](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/01-conceptual-architecture-model.puml)
+
+*High-level overview of the V2X blockchain security architecture showing OBUs, RSUs, and blockchain layers.*
+
+### 2. Sequence Flow Model
+
+![Sequence Flow](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/02-sequence-flow-model.puml)
+
+*Detailed message flow from vehicle transmission through validation to blockchain confirmation.*
+
+### 3. Component Model
+
+![Component Model](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/03-component-model.puml)
+
+*Component-level architecture showing system modules and their interactions.*
+
+### 4. Latency Evaluation Model
+
+![Latency Evaluation](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/04-latency-evaluation-model.puml)
+
+*Latency measurement points and evaluation methodology for performance analysis.*
+
+### 5. Throughput Evaluation Model
+
+![Throughput Evaluation](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/05-throughput-evaluation-model.puml)
+
+*Throughput measurement methodology and stress testing approach.*
+
+### 6. Platform Comparison
+
+![Platform Comparison](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/paulo-henrique-ph/v2v-blockchain-security/master/docs/06-platform-comparison.puml)
+
+*Comparative analysis of Hyperledger Fabric, IOTA Tangle, and Ethereum PoA platforms.*
+
+> **Note:** These diagrams are rendered directly from PlantUML source files in the `docs/` directory. If diagrams don't render, ensure the repository is public and the files are accessible at the URLs above.
 
 ## 🔒 Security Features
 
