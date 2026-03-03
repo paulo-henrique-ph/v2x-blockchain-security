@@ -1,64 +1,65 @@
 @startuml Sequence Model - Operation Flow
-@enduml
 
-end note
-    Verifiable and immutable alert recorded
-    **Transaction completed successfully**
-note over VehicleA, Ledger
+!theme plain
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
 
-Ledger --> VehicleB : Transaction confirmation
-VehicleB -> Ledger : Queries provenance\nand integrity of alert
-== Verification by Receiver ==
+actor "Vehicle A" as VehicleA
+actor "Vehicle B" as VehicleB
+participant "Gateway RSU" as RSU
+participant "Identity\nService" as Identity
+participant "Validator Nodes" as Validators
+participant "Leader Node/\nMiner" as Leader
+database "Blockchain/DAG" as Ledger
 
-Validators -> Ledger : Updates local ledger
+== Alert Generation and Transmission ==
+VehicleA -> VehicleA : Detects hazard
+VehicleA -> VehicleA : Generates Alert Message
+VehicleA -> VehicleA : Signs with Private Key
 
-Leader -> Validators : Transmits block to network
-Leader -> Ledger : Records validated block
-Leader -> Leader : Assembles new block
-== Block Creation and Propagation ==
+VehicleA -> VehicleB : Transmits signed\nmessage (V2V)
+VehicleA -> RSU : Transmits signed\nmessage (V2I)
 
-Validators -> Leader : Consensus reached
+== Validation and Aggregation ==
+RSU -> Identity : Query Public Key\nof Vehicle A
+Identity --> RSU : Returns Public Key
 
-end note
-    4. Commit
-    3. Prepare
-    2. Pre-prepare
-    1. Request
-    PBFT Stages:
 note right
-Validators -> Validators : Executes Consensus\nAlgorithm (PBFT)
-== Consensus ==
+    Validates authenticity
+    and integrity
+end note
+RSU -> RSU : Verifies digital\nsignature
 
 RSU -> Validators : Propagates\nAggregated Transaction
 
-end note
-    and integrity
-    Validates authenticity
+== Consensus ==
+Validators -> Validators : Executes Consensus\nAlgorithm (PBFT)
 note right
-RSU -> RSU : Verifies digital\nsignature
+    PBFT Stages:
+    1. Request
+    2. Pre-prepare
+    3. Prepare
+    4. Commit
+end note
 
-Identity --> RSU : Returns Public Key
-RSU -> Identity : Query Public Key\nof Vehicle A
-== Validation and Aggregation ==
+Validators -> Leader : Consensus reached
 
-VehicleA -> RSU : Transmits signed\nmessage (V2I)
-VehicleA -> VehicleB : Transmits signed\nmessage (V2V)
+== Block Creation and Propagation ==
+Leader -> Leader : Assembles new block
+Leader -> Ledger : Records validated block
+Leader -> Validators : Transmits block to network
 
-VehicleA -> VehicleA : Signs with Private Key
-VehicleA -> VehicleA : Generates Alert Message
-VehicleA -> VehicleA : Detects hazard
-== Alert Generation and Transmission ==
+Validators -> Ledger : Updates local ledger
 
-database "Blockchain/DAG" as Ledger
-participant "Leader Node/\nMiner" as Leader
-participant "Validator Nodes" as Validators
-participant "Identity\nService" as Identity
-participant "Gateway RSU" as RSU
-actor "Vehicle B" as VehicleB
-actor "Vehicle A" as VehicleA
+== Verification by Receiver ==
+VehicleB -> Ledger : Queries provenance\nand integrity of alert
+Ledger --> VehicleB : Transaction confirmation
 
-skinparam sequenceParticipant underline
-skinparam maxmessagesize 60
-skinparam roundcorner 20
-skinparam sequenceArrowThickness 2
-!theme plain
+note over VehicleA, Ledger
+    **Transaction completed successfully**
+    Verifiable and immutable alert recorded
+end note
+
+@enduml
