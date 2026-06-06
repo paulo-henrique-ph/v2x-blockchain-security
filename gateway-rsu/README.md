@@ -54,13 +54,61 @@ go run cmd/server/main.go
 - **POST /api/v1/messages** — Submit V2X message
 - **GET /api/v1/stats** — Get statistics
 - **GET /health** — Health check
+- **GET /swagger/** — Interactive Swagger UI (OpenAPI 3.0 documentation)
+- **GET /metrics** — Prometheus metrics
 
-Example:
+### Swagger UI
+
+Access the interactive API documentation at:
+```
+http://localhost:3000/swagger/index.html
+```
+
+The OpenAPI specification is automatically generated from code annotations and includes:
+- Complete endpoint documentation
+- Request/response schemas with examples
+- Try-it-out functionality for testing endpoints
+- Data model definitions with validation rules
+
+### OpenAPI Spec Files
+
+The OpenAPI specification is available in multiple formats:
+- **JSON:** `docs/swagger.json`
+- **YAML:** `docs/swagger.yaml`
+- **Go docs:** `docs/docs.go` (auto-generated, imported by server)
+
+### Example Request
+
 ```bash
 curl -X POST http://localhost:3000/api/v1/messages \
   -H "Content-Type: application/json" \
-  -d '{ "messageId": "MSG-001", ... }'
+  -d '{
+    "messageId": "MSG-001",
+    "messageType": "EMERGENCY_BRAKE",
+    "senderId": "VEHICLE-001",
+    "timestamp": "2026-03-03T10:00:00Z",
+    "priority": 0,
+    "latitude": -23.5505,
+    "longitude": -46.6333,
+    "signature": "base64encodedSignature==",
+    "metadata": {}
+  }'
 ```
+
+### Regenerating OpenAPI Spec
+
+If you modify the API annotations, regenerate the spec:
+```bash
+go install github.com/swaggo/swag/cmd/swag@latest
+swag init -g cmd/server/main.go -o docs --parseDependency --parseInternal
+```
+
+---
+
+## gRPC API
+
+For high-performance scenarios, use the gRPC endpoint on port 50051.
+See `internal/infrastructure/adapters/grpc/README.md` for full gRPC documentation.
 
 ---
 
