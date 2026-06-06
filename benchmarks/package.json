@@ -1,0 +1,28 @@
+{
+  "name": "v2v-blockchain-benchmarks",
+  "version": "1.0.0",
+  "description": "Performance benchmarking and comparative analysis for blockchain platforms in ITS",
+  "main": "framework/index.js",
+  "type": "module",
+  "scripts": {
+    "benchmark:fabric": "node framework/run-benchmark.js --platform fabric",
+    "benchmark:ethereum": "node framework/run-benchmark.js --platform ethereum",
+    "benchmark:iota": "node framework/run-benchmark.js --platform iota",
+    "benchmark:all": "node framework/run-benchmark.js --platform all",
+    "analyze": "node framework/analyze-results.js",
+    "report": "node framework/generate-report.js",
+    "test": "jest"
+  },
+  "author": "Paulo Henrique Gomes Pinto",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "chartjs-node-canvas": "^4.1.6",
+    "commander": "^11.1.0",
+    "csv-writer": "^1.6.0",
+    "table": "^6.8.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
