@@ -1,0 +1,19 @@
+% LaTeX report template for simulation results
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\section*{Simulation Results}
+
+\subsection*{Latency Percentiles}
+\begin{tabular}{l|c}
+Percentile & Value (ms) \\
+\hline
+p50 & {{ p50 }} \\
+p95 & {{ p95 }} \\
+p99 & {{ p99 }} \\
+\end{tabular}
+
+\subsection*{Latency CDF}
+\includegraphics[width=0.8\textwidth]{latency-cdf.pdf}
+
+\end{document}
