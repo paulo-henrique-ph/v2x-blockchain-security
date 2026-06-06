@@ -1,0 +1,230 @@
+basePath: /api/v1
+definitions:
+  internal_infrastructure_adapters_rest.ErrorResponse:
+    properties:
+      error:
+        example: Invalid request body
+        type: string
+      message:
+        example: messageId is required
+        type: string
+    type: object
+  internal_infrastructure_adapters_rest.HealthResponse:
+    properties:
+      status:
+        example: healthy
+        type: string
+      timestamp:
+        example: "2026-03-03T10:00:00Z"
+        type: string
+      uptime:
+        example: 2h30m15s
+        type: string
+    type: object
+  internal_infrastructure_adapters_rest.ProcessingResult:
+    properties:
+      error:
+        example: Validation failed
+        type: string
+      latency:
+        example: 45
+        type: integer
+      messageId:
+        example: MSG-001
+        type: string
+      reason:
+        example: Invalid signature
+        type: string
+      status:
+        enum:
+        - submitted
+        - aggregated
+        - rejected
+        example: submitted
+        type: string
+      success:
+        example: true
+        type: boolean
+      timestamp:
+        example: "2026-03-03T10:00:00Z"
+        type: string
+      txHash:
+        example: "0x1234567890abcdef"
+        type: string
+    type: object
+  internal_infrastructure_adapters_rest.StatisticsResponse:
+    properties:
+      avgLatencyMs:
+        example: 42.5
+        type: number
+      totalAggregated:
+        example: 350
+        type: integer
+      totalReceived:
+        example: 1000
+        type: integer
+      totalRejected:
+        example: 50
+        type: integer
+      totalSubmitted:
+        example: 600
+        type: integer
+      totalValidated:
+        example: 950
+        type: integer
+      uptime:
+        example: 2h30m15s
+        type: string
+    type: object
+  internal_infrastructure_adapters_rest.V2XMessageRequest:
+    properties:
+      latitude:
+        example: -23.5505
+        maximum: 90
+        minimum: -90
+        type: number
+      longitude:
+        example: -46.6333
+        maximum: 180
+        minimum: -180
+        type: number
+      messageId:
+        example: MSG-001
+        type: string
+      messageType:
+        enum:
+        - CAM
+        - DENM
+        - SPAT
+        - MAP
+        - EMERGENCY_BRAKE
+        - COLLISION_WARNING
+        - TRAFFIC_UPDATE
+        - ROAD_HAZARD
+        example: EMERGENCY_BRAKE
+        type: string
+      metadata:
+        type: object
+      priority:
+        example: 0
+        maximum: 3
+        minimum: 0
+        type: integer
+      senderId:
+        example: VEHICLE-001
+        type: string
+      signature:
+        example: base64encodedSignature==
+        type: string
+      timestamp:
+        example: "2026-03-03T10:00:00Z"
+        type: string
+    required:
+    - latitude
+    - longitude
+    - messageId
+    - messageType
+    - priority
+    - senderId
+    - signature
+    - timestamp
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: via GitHub Issues
+    name: Paulo Henrique Gomes Pinto
+    url: https://github.com/paulo-henrique-ph/v2v-blockchain-security
+  description: |-
+    High-performance V2X Gateway RSU for secure vehicle-to-infrastructure communication with blockchain integration
+
+    This API provides endpoints for:
+    - Processing V2X messages (CAM, DENM, SPAT, MAP)
+    - Message validation and security checks
+    - Blockchain integration for immutable audit trails
+    - Real-time statistics and health monitoring
+  license:
+    name: GNU General Public License v2.0
+    url: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+  title: V2X Gateway RSU API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      description: Check if the gateway is running and operational
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Gateway is healthy
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.HealthResponse'
+      summary: Health check
+      tags:
+      - Health
+  /messages:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Process a V2X message with validation, security checks, and blockchain submission
+
+        The message will be validated for:
+        - Digital signature authenticity
+        - Replay attack prevention
+        - Plausibility checks (coordinates, timestamp)
+
+        Critical messages (priority 0-1, emergency types) are immediately submitted to blockchain.
+        Non-critical messages are aggregated for batch processing.
+      parameters:
+      - description: V2X Message
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/internal_infrastructure_adapters_rest.V2XMessageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Message processed and submitted to blockchain
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.ProcessingResult'
+        "202":
+          description: Message accepted for aggregation
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.ProcessingResult'
+        "400":
+          description: Invalid request or validation failed
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.ErrorResponse'
+      summary: Process V2X message
+      tags:
+      - Messages
+  /stats:
+    get:
+      description: Retrieve processing statistics including message counts, latencies,
+        and throughput
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Gateway statistics
+          schema:
+            $ref: '#/definitions/internal_infrastructure_adapters_rest.StatisticsResponse'
+      summary: Get gateway statistics
+      tags:
+      - Health
+schemes:
+- http
+- https
+swagger: "2.0"
+tags:
+- description: V2X message processing endpoints
+  name: Messages
+- description: Health check and statistics endpoints
+  name: Health
