@@ -1,5 +1,31 @@
 ﻿package main
 
+// @title V2X Gateway RSU API
+// @version 1.0
+// @description High-performance V2X Gateway RSU for secure vehicle-to-infrastructure communication with blockchain integration
+// @description
+// @description This API provides endpoints for:
+// @description - Processing V2X messages (CAM, DENM, SPAT, MAP)
+// @description - Message validation and security checks
+// @description - Blockchain integration for immutable audit trails
+// @description - Real-time statistics and health monitoring
+//
+// @contact.name Paulo Henrique Gomes Pinto
+// @contact.url https://github.com/paulo-henrique-ph/v2v-blockchain-security
+// @contact.email via GitHub Issues
+//
+// @license.name GNU General Public License v2.0
+// @license.url https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+//
+// @host localhost:3000
+// @BasePath /api/v1
+// @schemes http https
+//
+// @tag.name Messages
+// @tag.description V2X message processing endpoints
+// @tag.name Health
+// @tag.description Health check and statistics endpoints
+
 import (
 	"fmt"
 	"log"
@@ -9,6 +35,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	_ "github.com/phgp/v2x-gateway-rsu/docs" // Swagger docs
 	"github.com/phgp/v2x-gateway-rsu/internal/application/services"
 	"github.com/phgp/v2x-gateway-rsu/internal/infrastructure/adapters/blockchain"
 	"github.com/phgp/v2x-gateway-rsu/internal/infrastructure/adapters/grpc"
@@ -17,6 +44,7 @@ import (
 	"github.com/phgp/v2x-gateway-rsu/internal/infrastructure/adapters/security"
 	"github.com/phgp/v2x-gateway-rsu/pkg/telemetry"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	httpSwagger "github.com/swaggo/http-swagger"
 	grpcLib "google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -79,7 +107,8 @@ func main() {
 	http.HandleFunc("/api/v1/messages", restAdapter.HandleV2XMessage)
 	http.HandleFunc("/api/v1/stats", restAdapter.HandleGetStats)
 	http.HandleFunc("/health", restAdapter.HandleHealthCheck)
-	http.Handle("/metrics", promhttp.Handler()) // Prometheus metrics endpoint
+	http.Handle("/metrics", promhttp.Handler())        // Prometheus metrics endpoint
+	http.Handle("/swagger/", httpSwagger.WrapHandler) // Swagger UI endpoint
 
 	// Start REST server in background
 	restPort := ":3000"

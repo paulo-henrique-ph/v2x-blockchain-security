@@ -10,7 +10,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -19,6 +18,8 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+var File_internal_infrastructure_adapters_grpc_v2x_proto protoreflect.FileDescriptor
 
 // V2X Message Request
 type V2XMessageRequest struct {
@@ -576,6 +577,7 @@ func file_internal_infrastructure_adapters_grpc_v2x_proto_init() {
 		DependencyIndexes: file_internal_infrastructure_adapters_grpc_v2x_proto_depIdxs,
 		MessageInfos:      file_internal_infrastructure_adapters_grpc_v2x_proto_msgTypes,
 	}.Build()
+	File_internal_infrastructure_adapters_grpc_v2x_proto = out.File
 	file_internal_infrastructure_adapters_grpc_v2x_proto_rawDesc = nil
 	file_internal_infrastructure_adapters_grpc_v2x_proto_goTypes = nil
 	file_internal_infrastructure_adapters_grpc_v2x_proto_depIdxs = nil

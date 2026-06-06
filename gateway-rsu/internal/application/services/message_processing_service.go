@@ -3,6 +3,7 @@
 package services
 
 import (
+	"context"
 	"fmt"
 	"sync/atomic"
 	"time"
@@ -10,6 +11,9 @@ import (
 	"github.com/phgp/v2x-gateway-rsu/internal/application/ports"
 	"github.com/phgp/v2x-gateway-rsu/internal/domain/entities"
 	"github.com/phgp/v2x-gateway-rsu/internal/domain/usecases"
+	"github.com/phgp/v2x-gateway-rsu/pkg/telemetry"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/codes"
 )
 
 // MessageProcessingService implements MessageProcessingPort

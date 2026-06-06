@@ -113,8 +113,6 @@ func Initialize(config *Config) (func(), error) {
 
 	// Return cleanup function
 	cleanup := func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
 
 		for _, shutdown := range shutdownFuncs {
 			shutdown()
